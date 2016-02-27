@@ -1,3 +1,11 @@
+/*
+ * Git Homework
+ * Team Members
+ * Christine Gallarin
+ * Amanda McCarty
+ * Nicholas Merrell
+*/
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
@@ -7,43 +15,64 @@ public class Main {
 	
 	public static void main (String[] args)
 	{
-		choice = 0;
-		while (choice != 3)
+		
+		
+		while (true)
 		{
 			choice = MainMenu();
-			
-			switch (choice)
+			//handle wrong input possibility
+			if (choice == 1 || choice == 2 || choice == 3)
 			{
-			case 1: OneOfOne();
+				switch (choice)
+				{
+				case 1: OneOfOne();
 				break;
-			case 2: Scores();
+				case 2: Scores();
 				break;
-			case 3: ExitMessage();
+				case 3: ExitMessage();
 				break;
-			default: System.exit(0);
+				default: System.exit(0);
 				break;
+				}
+			}
+			else{
+				System.out.println("Invalid choice. Try again");
 			}
 		}
 	}
+	
 
 	private static void OneOfOne() {
 		int move1, move2;
 		int result;
-		System.out.println("\n[1] Rock\t[2] Paper\t[3] Scissors");
-		System.out.print("Which move do you choose? : ");
-		move1 = in.nextInt();				// player's move choice
-		move2 = RandomMoveGenerator();		// computer's move choice
+		try{
+			System.out.println("\n[1] Rock\t[2] Paper\t[3] Scissors");
+			System.out.print("Which move do you choose? : ");
+			move1 = in.nextInt();				// player's move choice
+			
+			if (move1 == 1 || move1 == 2 || move1 == 3){
+				move2 = RandomMoveGenerator();		// computer's move choice
+
+				System.out.println("Your opponent chose " +PrintMove(move2)+ "! ");
+
+				result = CompareMoves(move1, move2);			// compare moves	
+
+				if (result == 0)
+					System.out.println("It's a draw.\n");
+				else if (result == 1)
+					System.out.println("You win!\n");
+				else if (result == 2)
+					System.out.println("You lost!\n");
+			}
+			else{
+				System.out.println("Invalid move");
+			}
 		
-		System.out.println("Your opponent chose " +PrintMove(move2)+ "! ");
-		
-		result = CompareMoves(move1, move2);			// compare moves	
-		
-		if (result == 0)
-			System.out.println("It's a draw.\n");
-		else if (result == 1)
-			System.out.println("You win!\n");
-		else if (result == 2)
-			System.out.println("You lost!\n");
+		}
+		catch (InputMismatchException e){
+			System.out.println("Invalid move");
+			in.nextLine();
+		}
 	}
 	
 	private static int CompareMoves(int playerMove, int cpuMove) {
@@ -124,16 +153,19 @@ public class Main {
 
 	public static int MainMenu()
 	{
-		int decision;
-		
-		System.out.println("Welcome to Rock Paper Scissors Bananza!\n\nWhat would you like to do?");
-		System.out.println("[1] Best 1 out of 1");
-		System.out.println("[2] View current scores");
-		System.out.println("[3] Exit game\n");
-		
-		System.out.print("Enter choice here: ");
-		decision = in.nextInt();
-		
+		int decision = 0;
+		try {
+			System.out.println("Welcome to Rock Paper Scissors Bananza!\n\nWhat would you like to do?");
+			System.out.println("[1] Best 1 out of 1");
+			System.out.println("[2] View current scores");
+			System.out.println("[3] Exit game\n");
+			
+			System.out.print("Enter choice here: ");
+			decision = in.nextInt();
+		}
+		catch (InputMismatchException e){
+			in.nextLine();
+		}
 		return decision;
 	}
 	
