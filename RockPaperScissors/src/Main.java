@@ -34,6 +34,7 @@ public class Main {
         }
       } else {
         System.out.println("Invalid choice. Try again");
+        in.nextLine();
       }
     }
   }
